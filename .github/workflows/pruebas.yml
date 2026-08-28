@@ -1,0 +1,34 @@
+name: Pruebas del Scraper
+
+# 1. ¿Cuándo se ejecuta?
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+    branches:
+      - main
+      - pruebas
+
+jobs:
+  test:
+    # 2. ¿Dónde se ejecuta? (GitHub te presta este servidor)
+    runs-on: ubuntu-latest
+
+    # 3. ¿Qué pasos realiza?
+    steps:
+      # Descarga tu código al servidor virtual
+      - name: Clonar el código
+        uses: actions/checkout@v4
+
+      # Instala el entorno de ejecución
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      # Ejecuta tus comandos
+      - name: Validar sintaxis del scraper
+        run: |
+          echo "Ejecutando validación del código..."
+          python -m py_compile scraper.py
